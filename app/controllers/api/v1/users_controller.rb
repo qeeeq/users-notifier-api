@@ -16,7 +16,7 @@ class Api::V1::UsersController < ApplicationController
 
   # PUT /users/:id
   def update
-    unless @user.update(shared_params)
+    unless @user.update!(shared_params)
       render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
     end
   end

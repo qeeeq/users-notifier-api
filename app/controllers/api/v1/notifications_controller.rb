@@ -9,6 +9,7 @@ class Api::V1::NotificationsController < ApplicationController
 
     if @note.save
       render json: @note, status: :created
+      send_notice(@note) if @note.notify_at
     else
       render json: { errors: @note.errors.full_messages },
              status: :unprocessable_entity
@@ -29,6 +30,11 @@ class Api::V1::NotificationsController < ApplicationController
 
   private
 
+  def send_notice(note)
+    time = (note.notify_at - Time.now)/1.minute
+    SendNoticeJob.set(wait: time.to_i.minutes).perform_later(@current_user, note.title, note.description)
+  end
+
   def set_note
     @note = Notification.find(params[:id])
 
@@ -41,6 +47,6 @@ class Api::V1::NotificationsController < ApplicationController
   end
 
   def note_params
-    params.permit(:title, :description, :notify_at)
+    params.permit(:user_device_id, :title, :description, :notify_at)
   end
 end
