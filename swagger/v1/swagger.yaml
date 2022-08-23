@@ -7,28 +7,25 @@ paths:
   "/api/v1/users":
     post:
       summary: create user
+      tags:
+      - Create user
+      parameters: []
       responses:
         '200':
           description: successful
-  "/api/v1/users/new":
-    get:
-      summary: new user
-      responses:
-        '200':
-          description: successful
-  "/api/v1/users/{id}/edit":
-    parameters:
-    - name: id
-      in: path
-      description: id
-      required: true
-      schema:
-        type: string
-    get:
-      summary: edit user
-      responses:
-        '200':
-          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+              - email
+              - password
   "/api/v1/users/{id}":
     parameters:
     - name: id
@@ -37,23 +34,28 @@ paths:
       required: true
       schema:
         type: string
-    patch:
-      summary: update user
-      responses:
-        '200':
-          description: successful
     put:
       summary: update user
+      tags:
+      - Update user
       responses:
         '200':
           description: successful
     delete:
       summary: delete user
+      tags:
+      - Delete user
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: successful
 servers:
-- url: https://{defaultHost}
+- url: http://localhost:3000
   variables:
     defaultHost:
-      default: www.example.com
+      default: http://localhost:3000

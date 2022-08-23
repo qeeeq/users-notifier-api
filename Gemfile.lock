@@ -301,7 +301,6 @@ GEM
     stimulus-rails (1.1.0)
       railties (>= 6.0.0)
     strscan (3.0.4)
-    swagger-blocks (3.0.0)
     thor (1.2.1)
     tilt (2.0.10)
     timeout (0.3.0)
@@ -357,7 +356,6 @@ DEPENDENCIES
   selenium-webdriver
   sprockets-rails
   stimulus-rails
-  swagger-blocks
   turbo-rails
   tzinfo-data
   web-console
