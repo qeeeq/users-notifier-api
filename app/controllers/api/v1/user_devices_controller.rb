@@ -1,29 +1,38 @@
 class Api::V1::UserDevicesController < ApplicationController
-  skip_before_action :verify_authenticity_token
   before_action :authorize_request
+  skip_before_action :verify_authenticity_token
 
   # POST /user_devices
   def create
-    @device = UserDevice.new(device_params.merge(user_id: @current_user.id))
+    device = UserDevice.new(device_params.merge(user_id: current_user.id))
 
-    if @device.save
-      render json: @device, status: :created
+    if device.save
+      render json: device, status: 201
     else
-      render json: { errors: @device.errors.full_messages },
-             status: :unprocessable_entity
+      render json: { errors: device.errors.full_messages }, status: 422
     end
   end
 
   # PUT /user_devices/:id
   def update
-    unless @device.update(device_params)
-      render json: { errors: @device.errors.full_messages }, status: :unprocessable_entity
+    device = UserDevice.find(params[:id])
+
+    if device.update(device_params)
+      render json: device, status: 200
+    else
+      render json: { errors: device.errors.full_messages }, status: 422
     end
   end
 
   # DELETE /user_devices/:id
   def destroy
-    @device.destroy
+    device = UserDevice.find(params[:id])
+
+    if device.destroy
+      render json: "Device id:#{params[:id]} destroyed", status: 200
+    else
+      render json: { errors: device.errors.full_messages }, status: 422
+    end
   end
 
   private

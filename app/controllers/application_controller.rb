@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  attr_reader :current_user
+
   def authorize_request
     header = request.headers['Authorization']
     header = header.split(' ').last if header
