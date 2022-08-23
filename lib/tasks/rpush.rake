@@ -6,7 +6,7 @@ namespace :rpush do
       connections: 1,
       environment: Rails.env,
       type: "Rpush::Client::ActiveRecord::Gcm::App",
-      auth_key: AUTH_KEY
+      auth_key: ENV['AUTH_KEY']
     )
     puts "Rpush Android app created Successfully"
   end
