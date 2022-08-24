@@ -39,8 +39,11 @@ class Api::V1::NotificationsController < ApplicationController
   private
 
   def send_notice(note)
+    return if Time.now > note.notify_at
+
     time = (note.notify_at - Time.now)/1.minute
-    SendNoticeJob.set(wait: time.to_i.minutes).perform_later(current_user, note.title, note.description)
+    
+    SendNoticeJob.set(wait: time.to_i.minutes).perform_later(note, note.title, note.description)
   end
 
   def note_params

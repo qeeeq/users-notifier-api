@@ -5,32 +5,82 @@
     "version": "v1"
   },
   "paths": {
-    "/api/v1/users": {
+    "/api/v1/notifications": {
       "post": {
-        "summary": "create user",
+        "summary": "create notification",
         "tags": [
-          "Create user"
+          "Create notification"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful"
+          }
+        }
+      }
+    },
+    "/api/v1/notifications/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "description": "id",
+          "required": true
+        }
+      ],
+      "patch": {
+        "summary": "update notification",
+        "tags": [
+          "Update notification"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful"
+          }
+        }
+      },
+      "delete": {
+        "summary": "delete notification",
+        "tags": [
+          "Delete notification"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful"
+          }
+        }
+      }
+    },
+    "/api/v1/user_devices": {
+      "post": {
+        "summary": "create user_device",
+        "tags": [
+          "Create device"
         ],
         "consumes": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "user",
+            "name": "user_device",
             "in": "body",
             "schema": {
               "type": "object",
               "properties": {
-                "email": {
+                "user_id": {
+                  "type": "integer"
+                },
+                "token": {
                   "type": "string"
                 },
-                "password": {
+                "device_type": {
                   "type": "string"
                 }
               },
               "required": [
-                "email",
-                "password"
+                "user_id",
+                "token",
+                "device_type"
               ]
             }
           }
@@ -42,15 +92,9 @@
         }
       }
     },
-    "/api/v1/users/{id}": {
+    "/api/v1/user_devices/{id}": {
       "patch": {
-        "summary": "update user",
-        "tags": [
-          "Update user"
-        ],
-        "consumes": [
-          "application/json"
-        ],
+        "summary": "update user_device",
         "security": [
           {
             "Bearer": {
@@ -59,24 +103,35 @@
         ],
         "parameters": [
           {
-            "name": "user",
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "user_device",
             "in": "body",
             "schema": {
               "type": "object",
               "properties": {
-                "name": {
+                "token": {
                   "type": "string"
                 },
-                "email": {
+                "device_type": {
                   "type": "string"
                 }
               },
               "required": [
-                "name",
-                "email"
+                "token",
+                "device_type"
               ]
             }
           }
+        ],
+        "tags": [
+          "Update device"
+        ],
+        "consumes": [
+          "application/json"
         ],
         "responses": {
           "200": {
@@ -85,23 +140,9 @@
         }
       },
       "delete": {
-        "summary": "delete user",
+        "summary": "delete user_device",
         "tags": [
-          "Delete user"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "type": "string",
-            "required": true
-          }
-        ],
-        "produces": [
-          "application/json"
+          "Delete device"
         ],
         "responses": {
           "200": {
