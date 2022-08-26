@@ -1,5 +1,4 @@
 class Api::V1::UserDevicesController < ApplicationController
-  before_action :authorize_request
   skip_before_action :verify_authenticity_token
 
   # POST /user_devices
@@ -7,9 +6,9 @@ class Api::V1::UserDevicesController < ApplicationController
     device = UserDevice.new(device_params.merge(user_id: current_user.id))
 
     if device.save
-      render json: device, status: 201
+      render json: device, status: :created
     else
-      render json: { errors: device.errors.full_messages }, status: 422
+      render json: { errors: device.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -20,7 +19,7 @@ class Api::V1::UserDevicesController < ApplicationController
     if device.update(device_params)
       render json: device, status: :ok
     else
-      render json: { errors: device.errors.full_messages }, status: 422
+      render json: { errors: device.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -31,7 +30,7 @@ class Api::V1::UserDevicesController < ApplicationController
     if device.destroy
       render json: device, status: :ok
     else
-      render json: { errors: device.errors.full_messages }, status: 422
+      render json: { errors: device.errors.full_messages }, status: :unprocessable_entity
     end
   end
 

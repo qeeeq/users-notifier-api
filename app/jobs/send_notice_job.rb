@@ -1,7 +1,8 @@
 class SendNoticeJob < ApplicationJob
   queue_as :default
 
-  def perform(note, title, description)
-    note.send_notification(title, description)
+  def perform(note_id)
+    note = Notification.find(note_id)
+    note.send!
   end
 end

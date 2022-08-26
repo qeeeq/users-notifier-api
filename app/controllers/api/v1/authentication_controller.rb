@@ -1,6 +1,6 @@
 class Api::V1::AuthenticationController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :authorize_request, except: :login
+  skip_before_action :authorize_request, only: :login
 
   # POST /auth/login
   def login
