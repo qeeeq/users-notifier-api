@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_note: one
+  user_device: one
+
+two:
+  user_note: two
+  user_device: two
